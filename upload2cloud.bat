@@ -1,0 +1,1 @@
+gcloud app deploy --version %1 --promote --stop-previous-version
