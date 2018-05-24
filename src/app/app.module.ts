@@ -1,31 +1,38 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
+
 import { Angulartics2Module } from 'angulartics2';
 import { Angulartics2GoogleTagManager } from 'angulartics2/gtm';
 import { AppComponent } from './app.component';
-import { RouterModule, Routes } from '@angular/router';
 import { AdsenseModule } from 'ng2-adsense';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
-const ROUTES: Routes = [
-  { path: '',      component: AppComponent },
-  { path: 'about', component: AppComponent },
-];
-
+import {FullLayoutComponent} from './layouts/full-layout.component';
+import {AppRoutingModule} from './app.routing';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    FullLayoutComponent,
   ],
   imports: [
     BrowserModule,
-    RouterModule.forRoot(ROUTES),
+    AppRoutingModule,
+    NgbModule.forRoot(),
     Angulartics2Module.forRoot([ Angulartics2GoogleTagManager ]),
     AdsenseModule.forRoot({
       adClient: 'ca-pub-1686891852898803',
       pageLevelAds: true
     }),
   ],
-  providers: [],
+  providers: [{
+    provide: LocationStrategy,
+    useClass: HashLocationStrategy},
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+platformBrowserDynamic().bootstrapModule(AppModule);
