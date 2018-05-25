@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import {FullLayoutComponent} from "./layouts/full-layout.component";
+import {FullLayoutComponent} from "./layouts/full-layout/full-layout.component";
+import {SimpleLayoutComponent} from "./layouts/simple-layout/simple-layout.component";
 
 export const routes: Routes = [
   { path: '',
-    component: FullLayoutComponent,
+    component: SimpleLayoutComponent,
     children: [
       {
         path: 'login',
