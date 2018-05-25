@@ -9,7 +9,7 @@ export const routes: Routes = [
     component: SimpleLayoutComponent,
     children: [
       {
-        path: 'login',
+        path: '',
         loadChildren: './pages/login/login-module#LoginModule'
       }]
   }
