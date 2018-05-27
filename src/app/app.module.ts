@@ -1,8 +1,10 @@
 //<editor-fold desc="@Angular Imports">
+import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+
 //</editor-fold>
 
 //<editor-fold desc="External Imports">
@@ -36,7 +38,7 @@ import { environment } from '../environments/environment';
     SimpleLayoutComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserAnimationsModule,
     BrowserModule,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
