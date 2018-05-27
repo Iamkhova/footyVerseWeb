@@ -16,6 +16,8 @@ import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { MatMenuModule} from '@angular/material/menu';
+import { MatIconModule} from '@angular/material/icon'
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 //</editor-fold>
@@ -24,11 +26,11 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import {FullLayoutComponent} from './layouts/full-layout/full-layout.component';
 import {SimpleLayoutComponent} from "./layouts/simple-layout/simple-layout.component";
 import {AppRoutingModule} from './app.routing';
-import {AuthGuard} from "./service/core/auth.guard.";
+import {AuthGuard} from "./service/core/auth.guard";
 import {AuthService} from "./service/core/auth.service";
-import {UserService} from "./service/core/user.service";
-import {UserResolver} from "./service/core/user.resolver";
 import { environment } from '../environments/environment';
+import { WidgetsModule} from "./widgets/widgets.module";
+
 //</editor-fold>
 
 @NgModule({
@@ -43,6 +45,8 @@ import { environment } from '../environments/environment';
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
+    MatMenuModule,
+    MatIconModule,
     AppRoutingModule,
     NgbModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),
@@ -52,14 +56,13 @@ import { environment } from '../environments/environment';
       adClient: environment.adClient,
       pageLevelAds: true
     }),
+    WidgetsModule
   ],
   providers: [{
     provide: LocationStrategy,
     useClass: HashLocationStrategy},
     AuthGuard,
     AuthService,
-    UserResolver,
-    UserService
   ],
   bootstrap: [AppComponent]
 })

@@ -16,9 +16,12 @@ export class LoginComponent implements  OnInit {
   ngOnInit() {}
 
   tryGoogleLogin(){
-    this.authService.doGoogleLogin()
+    this.authService.googleLogin()
       .then(res => {
-        this.router.navigate(['fv']);
-      })
+        console.log('Login Success');
+        this.router.navigate(['/fv']);
+      }).catch( error => {
+        console.log('somethign went wrong', error)
+    })
   }
 }
