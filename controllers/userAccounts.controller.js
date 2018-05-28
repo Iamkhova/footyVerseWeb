@@ -1,3 +1,4 @@
+const winston=require('winston')
 const gstore = require('gstore-node')();
 const User = require('../models/user.model');
 const Datastore = require('@google-cloud/datastore');
@@ -15,6 +16,8 @@ exports.createUser = function(req,res){
 
   userEntity.save()
     .then((entity) => {
+      console.log('test ran');
+      winston.log('info', exports.createUser.name + "API Test Ran!");
       res.json(entity);
     })
     .catch((err) => {

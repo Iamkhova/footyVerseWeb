@@ -40,6 +40,8 @@
     "pug": "^2.0.3",
     "raven": "^2.6.2",
     "rxjs": "^6.0.0",
+    "winston": "^2.4.2",
+    "winston-loggly-bulk": "^2.0.2",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
