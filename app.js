@@ -8,7 +8,7 @@ var logger = require('morgan');
 var Raven = require('raven');
 
 
-Raven.config('https://8f469024e59444a88a4619db5b7170f1@sentry.io/1215012').install();
+Raven.config(process.env.RAVEN_DDN).install();
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
