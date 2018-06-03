@@ -31,6 +31,8 @@ import {AuthService} from "./service/core/auth.service";
 import { environment } from '../environments/environment';
 import { WidgetsModule} from "./widgets/widgets.module";
 
+import {UserAccountService} from "./service/userAccount/userAccount.service";
+
 //</editor-fold>
 
 @NgModule({
@@ -63,6 +65,7 @@ import { WidgetsModule} from "./widgets/widgets.module";
     useClass: HashLocationStrategy},
     AuthGuard,
     AuthService,
+    UserAccountService
   ],
   bootstrap: [AppComponent]
 })

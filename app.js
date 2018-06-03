@@ -20,6 +20,11 @@ var app = express();
 const winston  = require('winston');
 require('winston-loggly-bulk');
 
+app.use(Raven.requestHandler());
+
+// The error handler must be before any other error middleware
+app.use(Raven.errorHandler());
+
 winston.add(winston.transports.Loggly, {
   inputToken: process.env.WINSTON_TOKEN,
   subdomain: process.env.WINSTON_SUBDOMAIN,
@@ -29,13 +34,6 @@ winston.add(winston.transports.Loggly, {
 /////////////////////////////////////////
 
 
-app.use(Raven.requestHandler());
-app.get('/', function mainHandler(req, res) {
-  throw new Error('Broke!');
-});
-
-// The error handler must be before any other error middleware
-app.use(Raven.errorHandler());
 
 
 // view engine setup

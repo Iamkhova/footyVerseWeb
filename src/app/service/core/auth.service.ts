@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import * as firebase from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { IUserAccountModel} from "../userAccount/userAccount.model";
+import { UserAccountService} from "../userAccount/userAccount.service";
 
 
 @Injectable()
@@ -9,7 +11,7 @@ export class AuthService {
 
   authState: any = null;
 
-  constructor(private afAuth: AngularFireAuth, private router: Router,) {
+  constructor(private afAuth: AngularFireAuth, private router: Router, private userAccountService: UserAccountService) {
       this.afAuth.authState.subscribe((auth) => {
       this.authState = auth
     });
@@ -55,7 +57,8 @@ export class AuthService {
     return this.afAuth.auth.signInWithPopup(provider)
       .then((credential) =>  {
         this.authState = credential.user
-        this.updateUserData()
+        this.updateUserData();
+        console.log('Social Login Data:', this.authState);
       })
       .catch(error => console.log(error));
   }
@@ -94,21 +97,16 @@ export class AuthService {
     this.router.navigate(['/'])
   }
 
-
   //// Helpers ////
   private updateUserData(): void {
-    // Writes user name and email to realtime db
-    // useful if your app displays information about users or for admin features
-    /*
-    let path = `users/${this.currentUserId}`; // Endpoint on firebase
-    let data = {
-      email: this.authState.email,
-      name: this.authState.displayName
-    }
+    const userData : IUserAccountModel = {};
 
-    this.db.object(path).update(data)
-      .catch(error => console.log(error));
-*/
+    userData.email = this.authState.email;
+    userData.displayName = this.authState.displayName;
+    userData.uuid = this.authState.uid;
+
+    this.userAccountService.syncSocialLoginToDB(userData);
+
   }
 
 }
