@@ -18,10 +18,22 @@ export class LoginComponent implements  OnInit {
   tryGoogleLogin(){
     this.authService.googleLogin()
       .then(res => {
-        console.log('Login Success');
+        console.log('Google Login Success');
         this.router.navigate(['/fv']);
       }).catch( error => {
-        console.log('somethign went wrong', error)
+        console.log('something went wrong', error)
     })
   }
+
+  tryFacebookLogin(){
+    this.authService.facebookLogin()
+      .then(res => {
+        console.log('Facebook Login Success');
+        this.router.navigate(['/fv']);
+      }).catch( error => {
+      console.log('something went wrong', error)
+    })
+  }
+
+
 }

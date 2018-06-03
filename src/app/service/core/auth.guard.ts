@@ -22,6 +22,7 @@ export class AuthGuard implements CanActivate {
       tap(loggedIn => {
         if (!loggedIn) {
           console.log("access denied")
+          //TODO Do a Service Provider Check to see if user logged in with wrong provider.
           this.router.navigate(['/login']);
         }
       }))
