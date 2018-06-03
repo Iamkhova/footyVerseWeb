@@ -12,7 +12,8 @@ export const environment = {
     storageBucket: "footyverse-202523.appspot.com",
     messagingSenderId: "678639283287"
   },
-  adClient: 'ca-pub-1686891852898803'
+  adClient: 'ca-pub-1686891852898803',
+  sentryDSN: 'https://8f469024e59444a88a4619db5b7170f1@sentry.io/1215012'
 };
 
 /*

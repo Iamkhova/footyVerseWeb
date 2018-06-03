@@ -39,6 +39,7 @@
     "ngx-bootstrap": "^3.0.0",
     "pug": "^2.0.3",
     "raven": "^2.6.2",
+    "raven-js": "^3.25.2",
     "rxjs": "^6.0.0",
     "winston": "^2.4.2",
     "winston-loggly-bulk": "^2.0.2",

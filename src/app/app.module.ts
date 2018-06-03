@@ -1,13 +1,14 @@
 //<editor-fold desc="@Angular Imports">
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ErrorHandler } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 //</editor-fold>
 
 //<editor-fold desc="External Imports">
+import * as Raven from 'raven-js';
 import { Angulartics2Module } from 'angulartics2';
 import { Angulartics2GoogleTagManager } from 'angulartics2/gtm';
 import { AppComponent } from './app.component';
@@ -20,6 +21,7 @@ import { MatMenuModule} from '@angular/material/menu';
 import { MatIconModule} from '@angular/material/icon'
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+
 //</editor-fold>
 
 //<editor-fold desc="Footyverse Imports">
@@ -34,6 +36,16 @@ import { WidgetsModule} from "./widgets/widgets.module";
 import {UserAccountService} from "./service/userAccount/userAccount.service";
 
 //</editor-fold>
+
+Raven
+  .config(environment.sentryDSN)
+  .install();
+
+export class RavenErrorHandler implements ErrorHandler {
+  handleError(err:any) : void {
+    Raven.captureException(err);
+  }
+}
 
 @NgModule({
   declarations: [
@@ -65,7 +77,8 @@ import {UserAccountService} from "./service/userAccount/userAccount.service";
     useClass: HashLocationStrategy},
     AuthGuard,
     AuthService,
-    UserAccountService
+    UserAccountService,
+    { provide: ErrorHandler, useClass: RavenErrorHandler }
   ],
   bootstrap: [AppComponent]
 })
