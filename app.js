@@ -55,18 +55,14 @@ app.use(function(req, res, next) {
   next(createError(404));
 });
 
-// error handler
-/*
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+app.use(Raven.requestHandler());
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+app.get('/', function mainHandler(req, res) {
+  throw new Error('Broke!');
 });
-*/
+app.use(Raven.errorHandler());
+
+
 app.use(function onError(err, req, res, next) {
   // The error id is attached to `res.sentry` to be returned
   // and optionally displayed to the user for support.
