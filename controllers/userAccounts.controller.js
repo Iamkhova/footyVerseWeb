@@ -108,14 +108,14 @@ let updateUser = function(user) {
   const funcName = 'updateUser';
   const uuid = user.uuid;
 
-  return new Promise(function (reslove,reject) {
+  return new Promise(function (resolve,reject) {
     User.update(user.uuid, user)
       .then((entity) => {
-        winston.log('info', fileName, funcName, uuid, "User Account updated.");
+        winston.log('info', fileName, funcName, uuid, "User Account updated!");
         resolve(entity);
       })
       .catch((err) => {
-        winston.log('info', fileName, funcName, uuid, err, "Update User Failed.");
+        winston.log('error', fileName, funcName, uuid, err, "Update User Failed.");
         reject(err);
       })
   })
