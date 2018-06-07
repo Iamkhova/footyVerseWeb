@@ -12,6 +12,7 @@ const userSchema = new Schema ({
   displayName: {type : 'string', optional: true},
   email: {type : 'string', optional: true},
   profilePhotoURL: {type : 'string', optional: true},
+  roles: {type : 'string', optional: true},
 
 })
 

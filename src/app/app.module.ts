@@ -29,6 +29,7 @@ import {FullLayoutComponent} from './layouts/full-layout/full-layout.component';
 import {SimpleLayoutComponent} from "./layouts/simple-layout/simple-layout.component";
 import {AppRoutingModule} from './app.routing';
 import {AuthGuard} from "./service/core/auth.guard";
+import {RoleGuard} from "./service/core/role.guard";
 import {AuthService} from "./service/core/auth.service";
 import { environment } from '../environments/environment';
 import { WidgetsModule} from "./widgets/widgets.module";
@@ -77,6 +78,7 @@ export class RavenErrorHandler implements ErrorHandler {
     useClass: HashLocationStrategy},
     AuthGuard,
     AuthService,
+    RoleGuard,
     UserAccountService,
     { provide: ErrorHandler, useClass: RavenErrorHandler }
   ],

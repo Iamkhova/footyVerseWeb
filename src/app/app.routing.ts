@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {AuthGuard} from "./service/core/auth.guard";
+import {RoleGuard} from "./service/core/role.guard";
 
 import {FullLayoutComponent} from "./layouts/full-layout/full-layout.component";
 import {SimpleLayoutComponent} from "./layouts/simple-layout/simple-layout.component";
@@ -15,7 +16,7 @@ export const routes: Routes = [
   { path: 'login', component: SimpleLayoutComponent,loadChildren: loginPath},
   { path: 'fv', component: FullLayoutComponent, canActivate: [AuthGuard],
     children: [
-      { path: 'home', loadChildren: homePath}
+      { path: 'home', loadChildren: homePath, canActivate: [RoleGuard], data: {roles: ['admin']} }
       ]
   }
 

@@ -24,6 +24,50 @@ exports.createUser = function(req,res){
   })
 }
 
+
+exports.loadUserByUUID = function(req, res){
+  const funcName = 'loadUserByUUID';
+  const uuid = req.body.uuid;
+
+  const findUserPromise = findUserByUUID({uuid: uuid}, uuid);
+  findUserPromise
+    .then ( resolve => {
+      res.json(resolve);
+    })
+    .catch ( reject => {
+      res.status(500).json(reject);
+    })
+
+}
+
+exports.roleCheck = function(req, res) {
+  const uuid = req.body.uuid;
+  const role = req.body.role;
+  const state = {state : ''};
+
+  const findUserPromise = findUserByUUID({uuid: uuid}, uuid);
+  findUserPromise
+    .then ( resolve => {
+      let roleFound = false;
+      state.state = roleFound;
+      const userRoles = JSON.parse(resolve['roles']);
+        for (let i = 0; i < userRoles.length; i++) {
+          for (let z = 0; z < role.length; z++) {
+            if ( userRoles[i] === role[z])
+            {
+              roleFound = true;
+              state.state = roleFound;
+            }
+          }
+        }
+
+        res.json(state);
+
+      })
+    .catch ( reject => {
+      res.status(500).json(false);
+    })
+}
 /**
  * Handle Social Login
  * @param req
@@ -33,15 +77,22 @@ exports.handleSocialLogin = function(req, res){
   const funcName = 'handleSocialLogin';
   const uuid = req.body.uuid;
 
-  User.findOne({ uuid: uuid})
-    .then((entity) => {
-      // Update User
+  const findUserPromise = findUserByUUID({uuid: uuid}, uuid);
+  findUserPromise
+    .then( user => {
+
+      // Unpack Roles to JSON
+      if (typeof(user.entityData.roles) !== 'undefined') {
+        user.entityData.roles = JSON.parse(user.entityData.roles);
+      }
+
       const updateUserPromise = updateUser(req.body);
       updateUserPromise.then( resolve => {
-        res.json(resolve);
+        res.json(user.entityData);
       }).catch( reject => {
         res.status(500).json(reject);
       })
+
     })
     .catch((error) => {
       winston.log('info', fileName, funcName, uuid, "No User Found. Creating New User");
@@ -52,6 +103,7 @@ exports.handleSocialLogin = function(req, res){
       }).catch( reject => {
         res.status(500).json(reject);
       })
+
     })
 }
 
@@ -96,6 +148,30 @@ let createNewUser = function(user) {
         reject(message)
       })
 
+  })
+}
+
+/**
+ * Find User By ID
+ * @param _query
+ * @param _uuid
+ * @returns {Promise<any>}
+ */
+let findUserByUUID = function(_query, _uuid){
+  return new Promise(function (resolve,reject) {
+
+    const funcName = 'findUserByUUID';
+
+    // query example {uuid: uuid}
+    User.findOne(_query)
+      .then((entity) => {
+        winston.log('info', fileName, funcName, _uuid, "User Found");
+        resolve(entity);
+      })
+      .catch((error) => {
+        winston.log('info', fileName, funcName, _uuid, "No User Found. Creating New User");
+        reject(error);
+      })
   })
 }
 
