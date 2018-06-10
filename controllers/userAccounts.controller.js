@@ -20,7 +20,7 @@ exports.createUser = function(req,res){
   createUserPromise.then( resolve => {
     res.json(resolve);
   }).catch( reject => {
-    res.status(500).json(message);
+    res.status(500).json(reject);
   })
 }
 
