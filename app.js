@@ -12,7 +12,7 @@ Raven.config(process.env.RAVEN_DDN).install();
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var internalAPIS = require('./routes/internalAPIS');
+var internalAPIS = require('./routes/internalApi');
 var app = express();
 
 /////////////////////////////////////////
