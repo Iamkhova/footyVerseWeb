@@ -2,7 +2,7 @@ import { Router, Request, Response, NextFunction } from 'express';
 import * as winston from 'winston';
 import * as Auth from './externalAuthorization.controller';
 
-class UniNameController {
+export class UniNameController {
 
   fileName: string;
 
